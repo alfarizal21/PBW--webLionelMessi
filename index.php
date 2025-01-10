@@ -109,114 +109,68 @@ include "koneksi.php";
     <!-- hero end -->
     <!-- article begin -->
     <section id="article" class="text-center p-5">
-        <div class="container">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <?php
-                $sql = "SELECT * FROM article ORDER BY tanggal DESC";
-                $hasil = $conn->query($sql);
+      <div class="container">
+        <h1 class="fw-bold display-4 pb-3">Article</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+          <?php
+          $sql = "SELECT * FROM article ORDER BY tanggal DESC";
+          $hasil = $conn->query($sql); 
 
-                while($row = $hasil->fetch_assoc()){
-                ?>
-                <div class="col">
-              <div class="card h-100">
-                <img src="https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2024/06/25/000_334t4ypjpg-20240625013419.jpg" class="card-img-top" alt="Piala Dunia Messi">
-                <div class="card-body">
-                  <h5 class="card-title">Piala Dunia</h5>
-                  <p class="card-text">Kasta tertinggi dalam turnamen sepak bola adalah Piala Dunia, dan Lionel Messi meraih kejayaan ini pada 2022.</p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-body-secondary">Last updated 3 mins ago</small>
-                </div>
-              </div>
-            </div>
+          while($row = $hasil->fetch_assoc()){
+          ?>
             <div class="col">
               <div class="card h-100">
-                <img src="https://asset-a.grid.id/crop/31x0:767x477/700x465/photo/2021/07/11/messi-pialajpg-20210711102530.jpg" class="card-img-top" alt="Copa America Messi">
+                <img src="asset/<?=$row["gambar"]?>" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title">Copa America</h5>
-                  <p class="card-text">Turnamen sepak bola antar negara di Amerika Selatan, di mana Messi membawa Argentina menjadi juara pada 2021.</p>
+                  <h5 class="card-title"><?= $row["judul"]?></h5>
+                  <p class="card-text">
+                    <?= $row["isi"]?>
+                  </p>
                 </div>
                 <div class="card-footer">
-                  <small class="text-body-secondary">Last updated 3 mins ago</small>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100">
-                <img src="https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2022/06/02/lionel-messi-argentina-italia-af-20220602043158.jpg" class="card-img-top" alt="Finalisma Messi">
-                <div class="card-body">
-                  <h5 class="card-title">Finalisma</h5>
-                  <p class="card-text">Pertandingan bergengsi antara juara Copa America dan Euro. Messi membawa Argentina mengalahkan Italia pada 2022.</p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-body-secondary">Last updated 3 mins ago</small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
-              <div class="card h-100">
-                <img src="https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2020/06/24/1370479074.jpg" class="card-img-top" alt="Ballon D'or Messi">
-                <div class="card-body">
-                  <h5 class="card-title">Ballon D'or</h5>
-                  <p class="card-text">Penghargaan Ballon d'Or diberikan kepada pemain terbaik dunia. Messi telah memenangkan penghargaan ini sebanyak tujuh kali.</p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-body-secondary">Last updated 3 mins ago</small>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100">
-                <img src="https://media.gettyimages.com/id/1176171995/photo/topshot-barcelonas-argentinian-forward-lionel-messi-poses-with-his-sixth-golden-shoe-awards.jpg?s=612x612&w=gi&k=20&c=Y5qRODNB9LSc1zOVOEARUKZnCdichqXlSUIUByQeE4o=" class="card-img-top" alt="Golden Boot Messi">
-                <div class="card-body">
-                  <h5 class="card-title">Golden Boot</h5>
-                  <p class="card-text">Penghargaan Golden Boot diberikan kepada pencetak gol terbanyak di kompetisi internasional. Messi meraih penghargaan ini beberapa kali.</p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-body-secondary">Last updated 3 mins ago</small>
+                  <small class="text-body-secondary">
+                    <?= $row["tanggal"]?>
+                  </small>
                 </div>
               </div>
             </div>
             <?php
-            }
-            ?>
-            </div>          
+          }
+          ?> 
         </div>
+      </div>
     </section>
     <!-- article end -->
     <!-- galerry begin -->
-    <section id="gallery" class="text-center p-5  bg-primary-subtle">
+    <section id="gallery" class="text-center p-5">
         <div class="container">
             <h1 class="fw-bold display-4 pb-3">Gallery</h1>
-            <div id="carouselExample" class="carousel slide">
+            <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img src="https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2024/06/25/000_334t4ypjpg-20240625013419.jpg" class="d-block w-100" alt="1">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://asset-a.grid.id/crop/31x0:767x477/700x465/photo/2021/07/11/messi-pialajpg-20210711102530.jpg" class="d-block w-100" alt="2">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2022/06/02/lionel-messi-argentina-italia-af-20220602043158.jpg" class="d-block w-100" alt="3">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2020/06/24/1370479074.jpg" class="d-block w-100" alt="4">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://media.gettyimages.com/id/1176171995/photo/topshot-barcelonas-argentinian-forward-lionel-messi-poses-with-his-sixth-golden-shoe-awards.jpg?s=612x612&w=gi&k=20&c=Y5qRODNB9LSc1zOVOEARUKZnCdichqXlSUIUByQeE4o=" class="d-block w-100" alt="5">
-                  </div>
+                    <?php
+                    $sql = "SELECT * FROM gallery ORDER BY tanggal DESC";
+                    $hasil = $conn->query($sql);
+                    $active = "active"; 
+
+                    while ($row = $hasil->fetch_assoc()) {
+                    ?>
+                        <div class="carousel-item <?= $active ?>">
+                            <img src="asset/<?=$row["gambar"]?>" class="d-block w-100" alt="Gallery Image">
+                        </div>
+                    <?php
+                        $active = ""; 
+                    }
+                    ?>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
                 </button>
-              </div>
+            </div>
         </div>
     </section>
     <!-- gallery end -->

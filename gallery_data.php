@@ -2,9 +2,8 @@
     <thead class="table-dark">
         <tr>
             <th>No</th>
-            <th class="w-25">Judul</th>
-            <th class="w-75">Isi</th>
-            <th class="w-25">Gambar</th>
+            <th class="w-25">Tanggal</th>
+            <th class="w-50">Gambar</th>
             <th class="w-25">Aksi</th>                        
         </tr>
     </thead>
@@ -17,7 +16,7 @@
         $limit_start = ($hlm - 1) * $limit;
         $no = $limit_start + 1;
 
-        $sql = "SELECT * FROM article ORDER BY tanggal DESC LIMIT $limit_start, $limit";
+        $sql = "SELECT * FROM gallery ORDER BY tanggal DESC LIMIT $limit_start, $limit";
         $hasil = $conn->query($sql);
 
         $no = 1;
@@ -26,21 +25,13 @@
         <tr>
             <td><?= $no++ ?></td>
             <td>
-                <strong><?= $row["judul"] ?></strong>
-                <br>pada : <?= $row["tanggal"] ?>
+                pada : <?= $row["tanggal"] ?>
                 <br>oleh : <?= $row["username"] ?>
             </td>
-            <td><?= $row["isi"] ?></td>
             <td>
-                <?php
-                    if ($row["gambar"] != '') {
-                    if (file_exists('asset/' . $row["gambar"] . '')) {
-                    ?>
-                        <img src="asset/<?= $row["gambar"] ?>" width="100">
-                        <?php
-                    }
-                }
-                ?>
+                <a href="#" class="preview-image" data-src="asset/<?= $row['gambar'] ?>" title="Lihat Gambar">
+                    <img src="asset/<?= $row['gambar'] ?>" width="200" class="img-thumbnail detail-trigger" data-bs-toggle="modal" data-bs-target="#modalDetail" data-src="asset/<?= $row['gambar'] ?>">
+                </a>
             </td>
             <td>
                 <a href="#" title="edit" class="badge rounded-pill text-bg-success" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $row["id"] ?>"><i class="bi bi-pencil"></i></a>
@@ -50,35 +41,19 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Article</h1>
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Gallery</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form method="post" action="" enctype="multipart/form-data">
                             <div class="modal-body">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput" class="form-label">Judul</label>
-                                    <input type="hidden" name="id" value="<?= $row["id"] ?>">
-                                    <input type="text" class="form-control" name="judul" placeholder="Tuliskan Judul Artikel" value="<?= $row["judul"] ?>" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="floatingTextarea2">Isi</label>
-                                    <textarea class="form-control" placeholder="Tuliskan Isi Artikel" name="isi" required><?= $row["isi"] ?></textarea>
-                                </div>
-                                <div class="mb-3">
                                     <label for="formGroupExampleInput2" class="form-label">Ganti Gambar</label>
+                                    <input type="hidden" name="id" value="<?= $row["id"] ?>">
                                     <input type="file" class="form-control" name="gambar">
                                 </div>
                                 <div class="mb-3">
                                     <label for="formGroupExampleInput3" class="form-label">Gambar Lama</label>
-                                    <?php
-                                    if ($row["gambar"] != '') {
-                                        if (file_exists('asset/' . $row["gambar"] . '')) {
-                                    ?>
-                                            <br><img src="asset/<?= $row["gambar"] ?>" width="100">
-                                    <?php
-                                        }
-                                    }
-                                    ?>
+                                    <br><img src="asset/<?= $row["gambar"]?>" width="100">
                                     <input type="hidden" name="gambar_lama" value="<?= $row["gambar"] ?>">
                                 </div>
                             </div>
@@ -97,13 +72,13 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Konfirmasi Hapus Article</h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Konfirmasi Hapus Gallery</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form method="post" action="" enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="formGroupExampleInput" class="form-label">Yakin akan menghapus artikel "<strong><?= $row["judul"] ?></strong>"?</label>
+                                <label for="formGroupExampleInput" class="form-label">Yakin akan menghapus Gallery "<strong><?= $row["id"] ?></strong>"?</label>
                                 <input type="hidden" name="id" value="<?= $row["id"] ?>">
                                 <input type="hidden" name="gambar" value="<?= $row["gambar"] ?>">
                             </div>
@@ -119,18 +94,40 @@
             <!-- Akhir Modal Hapus -->
             </td>
         </tr>
+        <!-- Awal Modal Detail -->
+        <div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="modalDetailLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalDetailLabel">Detail Gambar</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img id="detailImage" src="" class="img-fluid" alt="Gambar" width="900">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Akhir Modal Detail -->
         <?php
         }
         ?>
     </tbody>
 </table>
 
+<script>
+    $(document).on('click', '.detail-trigger', function() {
+        var imgSrc = $(this).data('src');
+        $('#detailImage').attr('src', imgSrc);
+    });
+</script>
+
 <?php 
-$sql1 = "SELECT * FROM article";
+$sql1 = "SELECT * FROM gallery";
 $hasil1 = $conn->query($sql1); 
 $total_records = $hasil1->num_rows;
 ?>
-<p>Total article : <?php echo $total_records; ?></p>
+<p>Total gallery : <?php echo $total_records; ?></p>
 <nav class="mb-2">
     <ul class="pagination justify-content-end">
         <?php

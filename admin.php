@@ -14,8 +14,8 @@ if (!isset($_SESSION['username'])) {
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>My Daily Journal | Admin</title>
-    <link rel="icon" href="img/logo.png" />
+    <title>Lionel Messi | <?= $_SESSION['username']?></title>
+    <link rel="icon" href="asset/logo.webp" />
     <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
@@ -49,7 +49,7 @@ if (!isset($_SESSION['username'])) {
     <!-- nav begin -->
     <nav class="navbar navbar-expand-sm sticky-top bg-success">
     <div class="container">
-        <a class="navbar-brand" href="">My Daily Journal</a>
+        <a class="navbar-brand" href="">Lionel Messi</a>
         <button
         class="navbar-toggler"
         type="button"
@@ -69,11 +69,18 @@ if (!isset($_SESSION['username'])) {
             <li class="nav-item">
                 <a class="nav-link" href="admin.php?page=article">Article</a>
             </li> 
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=gallery">Gallery</a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link" href="index.php"><strong>HomePage</strong></a>
+            </li> 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-danger fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <?= $_SESSION['username']?>
                 </a>
                 <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="admin.php?page=profil">Profil <?= $_SESSION['username']?></a></li> 
                     <li><a class="dropdown-item" href="logout.php">Logout</a></li> 
                 </ul>
             </li> 
@@ -89,12 +96,12 @@ if (!isset($_SESSION['username'])) {
         <?php
         if(isset($_GET['page'])){
         ?>
-            <h4 class="lead display-6 pb-2 border-bottom border-danger-subtle"><?= ucfirst($_GET['page'])?></h4>
+            <h4 class="lead display-6 pb-2 border-bottom border-success-subtle"><?= ucfirst($_GET['page'])?></h4>
             <?php
             include($_GET['page'].".php");
         }else{
         ?>
-            <h4 class="lead display-6 pb-2 border-bottom border-danger-subtle">Dashboard</h4>
+            <h4 class="lead display-6 pb-2 border-bottom border-success-subtle">Dashboard</h4>
             <?php
             include("dashboard.php");
         }
